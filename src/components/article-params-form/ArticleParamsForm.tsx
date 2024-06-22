@@ -5,7 +5,7 @@ import { Select } from '../select/Select';
 import { RadioGroup } from 'components/radio-group';
 
 import styles from './ArticleParamsForm.module.scss';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import {
 	ArticleStateType,
 	OptionType,
@@ -24,7 +24,9 @@ type ArticleParamsFormProps = {
 };
 
 export const ArticleParamsForm = ({ onChange }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const menuRef = useRef<HTMLElement>(null);
+
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [formState, setFormState] =
 		useState<ArticleStateType>(defaultArticleState);
 
@@ -44,16 +46,33 @@ export const ArticleParamsForm = ({ onChange }: ArticleParamsFormProps) => {
 	}
 
 	function handleOnOpen(): void {
-		setIsOpen(!isOpen);
+		setIsMenuOpen(!isMenuOpen);
 	}
+
+	useEffect(() => {
+		const handleCloseOutside = (e: MouseEvent) => {
+			if (e.target instanceof Node)
+				if (isMenuOpen && !menuRef.current?.contains(e.target)) {
+					console.log(e.target);
+					setIsMenuOpen(false);
+				}
+		};
+		if (isMenuOpen) {
+			document.addEventListener('mousedown', handleCloseOutside);
+		}
+		return () => {
+			document.removeEventListener('mousedown', handleCloseOutside);
+		};
+	}, [isMenuOpen]);
 
 	return (
 		<>
-			<ArrowButton handleOpenForm={handleOnOpen} />
+			<ArrowButton isMenuOpen={isMenuOpen} handleOpenForm={handleOnOpen} />
 			<aside
+				ref={menuRef}
 				className={clsx({
 					[styles.container]: true,
-					[styles.containerOpen]: isOpen,
+					[styles.containerOpen]: isMenuOpen,
 				})}>
 				<form
 					className={styles.form}
