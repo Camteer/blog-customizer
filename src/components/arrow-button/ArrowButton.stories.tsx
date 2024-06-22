@@ -11,6 +11,8 @@ type Story = StoryObj<typeof ArrowButton>;
 
 export const ArrowButtonStory: Story = {
 	render: () => {
+
 		return <></>;
+
 	},
 };

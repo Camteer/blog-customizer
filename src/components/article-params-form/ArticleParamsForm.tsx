@@ -5,7 +5,9 @@ import { Select } from '../select/Select';
 import { RadioGroup } from 'components/radio-group';
 
 import styles from './ArticleParamsForm.module.scss';
+
 import { FormEvent, useEffect, useRef, useState } from 'react';
+
 import {
 	ArticleStateType,
 	OptionType,
@@ -24,9 +26,11 @@ type ArticleParamsFormProps = {
 };
 
 export const ArticleParamsForm = ({ onChange }: ArticleParamsFormProps) => {
+
 	const menuRef = useRef<HTMLElement>(null);
 
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
 	const [formState, setFormState] =
 		useState<ArticleStateType>(defaultArticleState);
 
@@ -46,6 +50,7 @@ export const ArticleParamsForm = ({ onChange }: ArticleParamsFormProps) => {
 	}
 
 	function handleOnOpen(): void {
+
 		setIsMenuOpen(!isMenuOpen);
 	}
 
@@ -73,6 +78,7 @@ export const ArticleParamsForm = ({ onChange }: ArticleParamsFormProps) => {
 				className={clsx({
 					[styles.container]: true,
 					[styles.containerOpen]: isMenuOpen,
+
 				})}>
 				<form
 					className={styles.form}
