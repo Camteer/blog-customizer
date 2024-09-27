@@ -11,14 +11,8 @@ type Story = StoryObj<typeof ArrowButton>;
 
 export const ArrowButtonStory: Story = {
 	render: () => {
-		return (
-			<>
-				<ArrowButton
-					handleOpenForm={function (): void {
-						throw new Error('Function not implemented.');
-					}}
-				/>
-			</>
-		);
+
+		return <></>;
+
 	},
 };
